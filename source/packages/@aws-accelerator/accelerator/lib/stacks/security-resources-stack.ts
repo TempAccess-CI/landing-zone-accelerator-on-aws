@@ -479,8 +479,14 @@ export class SecurityResourcesStack extends AcceleratorStack {
         this.configRecorder = new cdk.aws_config.CfnConfigurationRecorder(this, 'ConfigRecorder', {
           roleArn: configRecorderRoleArn,
           recordingGroup: {
-            allSupported: true,
+            allSupported: false,
             includeGlobalResourceTypes: true,
+            exclusionByResourceTypes: {
+              resourceTypes: ['AWS::EC2::NetworkInterface"'],
+            },
+            recordingStrategy: {
+              useOnly: 'EXCLUSION_BY_RESOURCE_TYPES',
+            }
           },
         });
 
